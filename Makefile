@@ -128,7 +128,12 @@ _confinstall:
 	test -e ${DESTDIR}${SYSCONFDIR}/dhcpcd.conf || \
 		${INSTALL} -m ${CONFMODE} dhcpcd.conf ${DESTDIR}${SYSCONFDIR}
 
-install: proginstall _maninstall _confinstall
+_initinstall:
+	${INSTALL} -d ${DESTDIR}${SYSCONFDIR}
+	${INSTALL} -d ${DESTDIR}${SYSCONFDIR}/init.d
+	${INSTALL} -m ${BINMODE} ./init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/init.d
+
+install: proginstall _maninstall _confinstall _initinstall
 
 clean:
 	rm -f ${OBJS} ${PROG} ${PROG}.core ${CLEANFILES}
