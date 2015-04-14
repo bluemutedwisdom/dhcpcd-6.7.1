@@ -128,19 +128,21 @@ _confinstall:
 	test -e ${DESTDIR}${SYSCONFDIR}/dhcpcd.conf || \
 		${INSTALL} -m ${CONFMODE} dhcpcd.conf ${DESTDIR}${SYSCONFDIR}
 
-_initinstall:
+_inits:
 	${INSTALL} -d ${DESTDIR}${SYSCONFDIR}
 	${INSTALL} -d ${DESTDIR}${SYSCONFDIR}/init.d
 	${INSTALL} -m ${BINMODE} ./init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/init.d
-	
-_inits:	
 	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc0.d/K01dhcpcd
 	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc1.d/K01dhcpcd
+	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc2.d/S01dhcpcd
+	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc3.d/S01dhcpcd
+	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc4.d/S01dhcpcd
+	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc5.d/S01dhcpcd
 	ln -s -f ${DESTDIR}${SYSCONFDIR}/init.d/dhcpcd ${DESTDIR}${SYSCONFDIR}/rc6.d/K01dhcpcd
-	
-install: proginstall _maninstall _confinstall _initinstall
 
-install_start: proginstall _maninstall _confinstall _initinstall _inits
+install: proginstall _maninstall _confinstall
+
+install_start: proginstall _maninstall _confinstall _inits
 
 clean:
 	rm -f ${OBJS} ${PROG} ${PROG}.core ${CLEANFILES}
