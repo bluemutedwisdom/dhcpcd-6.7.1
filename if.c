@@ -457,7 +457,7 @@ if_discover(struct dhcpcd_ctx *ctx, int argc, char * const *argv)
 		/* We reserve the 100 range for virtual interfaces, if and when
 		 * we can work them out. */
 		ifp->metric = 200 + ifp->index;
-		if (if_getssid(ifp) != -1) {
+		if (if_getssid(ifp) != -1 || *ifp->name == 'w') {
 			ifp->wireless = 1;
 			ifp->metric += 100;
 		}
